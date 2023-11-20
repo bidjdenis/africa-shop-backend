@@ -1,0 +1,49 @@
+
+server:
+  port: 8081
+
+stripe:
+  apikey: sk_test_51N9YTaHc6KU9WzTtuX9QAU3Iq0TIFTRLJbUrpOBlaaxKbKEV9Y7S8ZdmxLufHCKUxjJQx5V8fd8rmLX4iFO248QS00b8Hbq89N
+
+spring:
+  profiles:
+    active: dev
+  datasource:
+    url: jdbc:mysql://localhost:3306/db_afric_shop?createDatabaseIfNotExist=true
+    username: root
+    password:
+  jpa:
+    show-sql: true
+    generate-ddl: true
+    hibernate.ddl-auto: update
+  database: mysql
+
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: -1
+      max-request-size: -1
+  security:
+    oauth2:
+      resource-server:
+        jwt:
+          issuer-uri: https://idp.example.com/issuer
+          jws-algorithms: RS512
+
+access-token:
+  private: ${ACCESS_TOKEN_PRIVATE_KEY_PATH}
+  public: ${ACCESS_TOKEN_PUBLIC_KEY_PATH}
+
+refresh-token:
+  public: ${REFRESH_TOKEN_PRIVATE_KEY_PATH}
+  private: ${REFRESH_TOKEN_PUBLIC_KEY_PATH}
+
+email:
+  username: assistance.africashop@gmail.com
+  password: qkefyuwiktzlscwc
+
+
+upload:
+    directory: ${user.home}/AfricShopFileDirectory
+
+
