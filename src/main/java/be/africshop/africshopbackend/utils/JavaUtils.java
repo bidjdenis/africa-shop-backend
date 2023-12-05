@@ -63,6 +63,8 @@ public class JavaUtils {
             API_BASE_URL + "country/delete/**",
             API_BASE_URL + "country/update/**",
             API_BASE_URL + "country/search/**",
+            API_BASE_URL + "command/**",
+            API_BASE_URL + "payment/**",
 
     };
 

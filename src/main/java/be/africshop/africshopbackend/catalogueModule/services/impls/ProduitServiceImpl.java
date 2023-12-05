@@ -321,7 +321,15 @@ public class ProduitServiceImpl implements ProductService {
 
     @Override
     public ProductResponse addToCart(Long idProduct, CartRequest request) {
+        System.out.println("******************************************************************");
+        System.out.println("**************************Enter To Cart**********************************");
+        System.out.println("******************************************************************");
         Product product = repository.findProductByDataStatusIsNotAndId(DataStatus.DELETED, idProduct).orElseThrow();
+
+        System.out.println("******************************************************************");
+        System.out.println("Product find : "+product.getLibelle());
+        System.out.println("******************************************************************");
+
         product.setCart(true);
         ProductResponse response = new ProductResponse();
         BeanUtils.copyProperties(repository.save(product), response);
@@ -329,20 +337,22 @@ public class ProduitServiceImpl implements ProductService {
         Optional<Cart> optionalCart = cartRepository.findByDataStatusIsNotAndProductId(DataStatus.DELETED, product.getId());
 
         if (optionalCart.isPresent()) {
-
+            System.out.println("******************************************************************");
+            System.out.println("**************************Cart Find**********************************");
+            System.out.println("******************************************************************");
             Cart carts = optionalCart.get();
             carts.setQuantity(request.getQuantity());
             cartRepository.save(carts);
-            return response;
         } else {
-
+            System.out.println("******************************************************************");
+            System.out.println("**************************Cart Not Find**********************************");
+            System.out.println("******************************************************************");
             Cart cart = new Cart();
             cart.setProduct(product);
             cart.setQuantity(request.getQuantity());
             cartRepository.save(cart);
-            return response;
         }
-
+        return response;
     }
 
     @Override
@@ -352,9 +362,10 @@ public class ProduitServiceImpl implements ProductService {
 
         List<Cart> cartList = cartRepository.findByDataStatusIsNot(DataStatus.DELETED);
 
+
         for (Cart c : cartList) {
-            Product p = repository.findProductByDataStatusIsNotAndId(DataStatus.DELETED, c.getProduct().getId()).orElseThrow();
-            List<FileAttachement> fileAttachements = atachementRepository.findByProductId(p.getId());
+
+            List<FileAttachement> fileAttachements = atachementRepository.findByProductId(c.getProduct().getId());
 
             CartResponse response = new CartResponse();
 

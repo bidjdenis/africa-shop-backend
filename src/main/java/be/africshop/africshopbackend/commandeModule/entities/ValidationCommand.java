@@ -40,6 +40,9 @@ public class ValidationCommand extends CommonEntity implements Serializable {
     @Column(name = "ville")
     private String ville;
 
+    @Column(name = "zip_code", length = 30)
+    private String zipCode;
+
     @Column(name = "telephone")
     private String telephone;
 

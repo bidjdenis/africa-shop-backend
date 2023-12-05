@@ -1,6 +1,7 @@
 package be.africshop.africshopbackend.commandeModule.controllers;
 
 import be.africshop.africshopbackend.commandeModule.dto.CommandRequest;
+import be.africshop.africshopbackend.commandeModule.response.CartResponse;
 import be.africshop.africshopbackend.commandeModule.services.CommandService;
 import be.africshop.africshopbackend.utils.JavaUtils;
 import be.africshop.africshopbackend.utils.handlers.HandlerException;
@@ -11,12 +12,15 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 
 
 @RestController
-@RequestMapping(value = "/api/v1/commande/")
+@RequestMapping(value = "/api/v1/command/")
+@CrossOrigin("*")
 public class CommandController extends HandlerException {
 
     private final CommandService service;
@@ -34,7 +38,7 @@ public class CommandController extends HandlerException {
         }
         return ResponseEntity.status(OK)
                 .contentType(APPLICATION_JSON)
-                .body(JavaUtils.successResponse("Category Product created with success.", OK, service.addCommandeRequest(request), true));
+                .body(JavaUtils.successResponse("Command created with success.", OK, service.addCommandeRequest(request), true));
     }
 
 
@@ -46,7 +50,7 @@ public class CommandController extends HandlerException {
         }
         return ResponseEntity.status(OK)
                 .contentType(APPLICATION_JSON)
-                .body(JavaUtils.successResponse("Category Product updated with success.", OK, service.updateCommandeRequest(request, id), true));
+                .body(JavaUtils.successResponse("Command updated with success.", OK, service.updateCommandeRequest(request, id), true));
     }
 
     @DeleteMapping(value = "delete/{id}")
@@ -54,7 +58,7 @@ public class CommandController extends HandlerException {
     public ResponseEntity<HttpResponse> delete(@PathVariable Long id){
         return ResponseEntity.status(OK)
                 .contentType(APPLICATION_JSON)
-                .body(JavaUtils.successResponse("Category Product deleted with success.", OK, service.deleteCommandeRequest(id), true));
+                .body(JavaUtils.successResponse("Command deleted with success.", OK, service.deleteCommandeRequest(id), true));
     }
 
     @GetMapping(value = "all")
@@ -62,7 +66,7 @@ public class CommandController extends HandlerException {
     public ResponseEntity<HttpResponse> list() {
         return ResponseEntity.status(OK)
                 .contentType(APPLICATION_JSON)
-                .body(JavaUtils.successResponse("commande list retrieved with success.", OK, service.getAllCommandeRequests(), true));
+                .body(JavaUtils.successResponse("command list retrieved with success.", OK, service.getAllCommandeRequests(), true));
     }
 
     @GetMapping(value = "{id}")
@@ -70,7 +74,18 @@ public class CommandController extends HandlerException {
     public ResponseEntity<HttpResponse> getOne(@PathVariable Long id){
         return ResponseEntity.status(OK)
                 .contentType(APPLICATION_JSON)
-                .body(JavaUtils.successResponse("commande retrieved with success.", OK, service.getCommandeRequestById(id), true));
+                .body(JavaUtils.successResponse("command retrieved with success.", OK, service.getCommandeRequestById(id), true));
+    }
+
+    @PostMapping(value = "order/{clientId}")
+    @PreAuthorize("hasAuthority('ROLE_USER')")
+    public ResponseEntity<HttpResponse> order(@Valid @RequestBody List<CartResponse> cartResponses, @PathVariable Long clientId, BindingResult result) {
+        if (result.hasErrors()) {
+            return this.createValidationHttpResponse("Error validation ",result.getFieldErrors());
+        }
+        return ResponseEntity.status(OK)
+                .contentType(APPLICATION_JSON)
+                .body(JavaUtils.successResponse("Command created with success.", OK, service.orderProduct(clientId, cartResponses), true));
     }
 
 

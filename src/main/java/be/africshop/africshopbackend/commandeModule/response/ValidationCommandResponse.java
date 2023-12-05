@@ -30,6 +30,8 @@ public class ValidationCommandResponse {
 
     private String telephone;
 
+    private String zipCode;
+
     private String email;
 
     private Country country;

@@ -1,17 +1,18 @@
 
 server:
-  port: 8081
+  port: ${SERVER_PORT}
 
 stripe:
   apikey: sk_test_51N9YTaHc6KU9WzTtuX9QAU3Iq0TIFTRLJbUrpOBlaaxKbKEV9Y7S8ZdmxLufHCKUxjJQx5V8fd8rmLX4iFO248QS00b8Hbq89N
 
 spring:
   profiles:
-    active: dev
+    active: ${ACTIVE_PROFILE:dev}
+    name: africa-shop
   datasource:
-    url: jdbc:mysql://localhost:3306/db_afric_shop?createDatabaseIfNotExist=true
-    username: root
-    password:
+    url: jdbc:mysql://${MYSQLHOST}:${MYSQLPORT}/${MYSQL_DATABASE}?createDatabaseIfNotExist=true
+    username: ${MYSQLUSER}
+    password: ${MYSQL_ROOT_PASSWORD}
   jpa:
     show-sql: true
     generate-ddl: true

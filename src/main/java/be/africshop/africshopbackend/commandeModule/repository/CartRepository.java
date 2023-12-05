@@ -11,5 +11,6 @@ import java.util.Optional;
 public interface CartRepository extends JpaRepository<Cart, Long> {
     List<Cart> findByDataStatusIsNot(DataStatus dataStatus);
 
+    Optional<Cart> findByDataStatusIsNotAndId(DataStatus dataStatus, Long id);
     Optional<Cart> findByDataStatusIsNotAndProductId(DataStatus dataStatus, Long idProduct);
 }

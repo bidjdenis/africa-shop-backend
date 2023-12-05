@@ -25,6 +25,8 @@ public class ValidationCommandRequest implements Serializable {
 
     private String telephone;
 
+    private String zipCode;
+
     private String email;
 
     private Long idPays;

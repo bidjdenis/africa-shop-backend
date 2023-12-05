@@ -25,7 +25,7 @@ public class Command extends CommonEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "numero_commande", length = 20, nullable = false)
+    @Column(name = "numero_commande", length = 80, nullable = false)
     private String numeroCommande;
 
     @Column(name = "total_price", length = 20, nullable = false)

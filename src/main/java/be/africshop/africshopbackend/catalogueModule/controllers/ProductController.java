@@ -189,6 +189,11 @@ public class ProductController extends HandlerException {
 
     @PostMapping(value = "/{idProduct}/add-cart")
     public ResponseEntity<HttpResponse> addToCart(@PathVariable Long idProduct, @RequestBody CartRequest request){
+
+        System.out.println("******************************************************************");
+        System.out.println("**************************Enter**********************************");
+        System.out.println("******************************************************************");
+
         return ResponseEntity.status(OK)
                 .contentType(APPLICATION_JSON)
                 .body(JavaUtils.successResponse("Product add to cart with success!", OK, productService.addToCart(idProduct, request), true));
